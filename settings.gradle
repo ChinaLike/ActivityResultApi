@@ -1,0 +1,3 @@
+include ':resultApi'
+include ':app'
+rootProject.name = "ActivityResultApi"
