@@ -17,7 +17,7 @@ android {
 
     defaultConfig {
         applicationId "com.demo.api"
-        minSdkVersion 17
+        minSdkVersion 19
         targetSdkVersion 31
         versionCode 1
         versionName "1.0"
@@ -52,7 +52,7 @@ dependencies {
     implementation 'androidx.appcompat:appcompat:1.2.0'
     implementation 'com.google.android.material:material:1.2.1'
     implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
-    implementation project(path: ':resultApi')
+    implementation project(path: ':ActivityResultApiKx')
     testImplementation 'junit:junit:4.+'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
@@ -63,6 +63,7 @@ dependencies {
     implementation("androidx.fragment:fragment-ktx:1.4.1")
 
     implementation 'com.alibaba:arouter-api:1.5.2'
+    implementation 'com.github.ChinaLike:Widgets:1.2.1'
     kapt 'com.alibaba:arouter-compiler:1.5.2'
 
 }

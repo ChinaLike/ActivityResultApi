@@ -8,17 +8,12 @@
         android:id="@+id/normalBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="普通跳转" />
-
-    <Button
-        android:id="@+id/aRouterBtn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="ARouter跳转" />
+        android:text="跳转" />
 
     <TextView
         android:id="@+id/content"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:text="@string/result_data" />
 
 </LinearLayout>

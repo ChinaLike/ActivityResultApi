@@ -1,6 +1,5 @@
 package com.core.result
 
-import android.util.Log
 import androidx.activity.result.ActivityResultCallback
 import androidx.activity.result.ActivityResultCaller
 import androidx.activity.result.ActivityResultLauncher
@@ -21,7 +20,6 @@ class XActivityResultContract<I, O>(
 
     private val launcher: ActivityResultLauncher<I>? =
         activityResultCaller.registerForActivityResult(activityResultContract) {
-            Log.d("测试","resultLauncher=${this}")
             activityResultCallback?.onActivityResult(it)
         }
 
@@ -30,7 +28,7 @@ class XActivityResultContract<I, O>(
      *
      */
     @JvmOverloads
-    fun launch( input: I, activityResultCallback: ActivityResultCallback<O>?) {
+    fun launch(input: I, activityResultCallback: ActivityResultCallback<O>?) {
         this.activityResultCallback = activityResultCallback
         launcher?.launch(input)
     }

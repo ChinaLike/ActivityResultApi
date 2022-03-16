@@ -7,6 +7,6 @@ package com.demo.api
  */
 object Router {
 
-    const val A_ROUTER_ACTIVITY = "/app/ARouterActivity"
+    const val SECOND_ACTIVITY = "/app/SecondActivity"
 
 }

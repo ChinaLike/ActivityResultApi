@@ -26,33 +26,52 @@ fun FragmentActivity.activityResultLauncher(): XActivityResultContract<Intent, A
     return if (TextUtils.isEmpty(activityKey)) null else ActivityLifecycleCallbacks.resultLauncherMap[activityKey]
 }
 
-///**
-// * 获取fragmentResultLauncher
-// */
-//fun Fragment.fragmentResultLauncher(): XActivityResultContract<Intent, ActivityResult>? {
-//    val fragmentKey =
-//        requireActivity().intent.getStringExtra(ActivityLifecycleCallbacks.KEY_FRAGMENT_LIFECYCLE_CALLBACKS)
-//    return if (TextUtils.isEmpty(fragmentKey)) null else ActivityLifecycleCallbacks.resultLauncherMap[fragmentKey]
-//}
-
 /**
  * 在Activity使用registerForActivityResult
  */
+@JvmOverloads
 inline fun FragmentActivity.registerForActivityResult(
     intent: Intent,
-    activityResultCallback: ActivityResultCallback<ActivityResult>
+    activityResultCallback: ActivityResultCallback<ActivityResult>? = null
 ) {
     activityResultLauncher()?.launch(intent, activityResultCallback)
 }
 
 /**
+ * 在Activity使用registerForActivityResult
+ */
+@JvmOverloads
+inline fun <reified T : FragmentActivity> FragmentActivity.registerForActivityResult(
+    intentExtra: (intent: Intent) -> Unit = {},
+    activityResultCallback: ActivityResultCallback<ActivityResult>?=null
+) {
+    val intent = Intent(this, T::class.java)
+    intentExtra(intent)
+    registerForActivityResult(intent, activityResultCallback)
+}
+
+/**
  * 在Fragment使用registerForActivityResult
  */
+@JvmOverloads
 inline fun Fragment.registerForActivityResult(
     intent: Intent,
-    activityResultCallback: ActivityResultCallback<ActivityResult>
+    activityResultCallback: ActivityResultCallback<ActivityResult>? = null
 ) {
     requireActivity().activityResultLauncher()?.launch(intent, activityResultCallback)
+}
+
+/**
+ * 在Fragment使用registerForActivityResult
+ */
+@JvmOverloads
+inline fun <reified T : FragmentActivity> Fragment.registerForActivityResult(
+    intentExtra: (intent: Intent) -> Unit = {},
+    activityResultCallback: ActivityResultCallback<ActivityResult>? = null
+) {
+    val intent = Intent(this.requireActivity(), T::class.java)
+    intentExtra(intent)
+    registerForActivityResult(intent, activityResultCallback)
 }
 
 /**
@@ -61,7 +80,7 @@ inline fun Fragment.registerForActivityResult(
  * @param [activityResultCallback] 返回数据回调
  */
 fun Postcard.navigation(
-    activity: FragmentActivity,
+    activity: FragmentActivity?,
     activityResultCallback: ActivityResultCallback<ActivityResult>
 ): Any? {
     return navigation(activity, null, activityResultCallback)
@@ -73,10 +92,10 @@ fun Postcard.navigation(
  * @param [activityResultCallback] 返回数据回调
  */
 fun Postcard.navigation(
-    fragment: Fragment,
+    fragment: Fragment?,
     activityResultCallback: ActivityResultCallback<ActivityResult>
 ): Any? {
-    return navigation(fragment.requireActivity(), null, activityResultCallback)
+    return navigation(fragment?.requireActivity(), null, activityResultCallback)
 }
 
 
@@ -87,48 +106,11 @@ fun Postcard.navigation(
  * @param [activityResultCallback] 返回数据回调
  */
 fun Postcard.navigation(
-    fragment: Fragment,
+    fragment: Fragment?,
     callback: NavigationCallback?,
     activityResultCallback: ActivityResultCallback<ActivityResult>
 ): Any? {
-    val _postcard = this
-    val activity = fragment.requireActivity()
-    val pretreatmentService = ARouter.getInstance().navigation(PretreatmentService::class.java)
-    if (null != pretreatmentService && !pretreatmentService.onPretreatment(activity, this)) {
-        return null
-    }
-
-    try {
-        LogisticsCenter.completion(_postcard)
-    } catch (ex: NoRouteFoundException) {
-        debugLog(activity, path, group)
-        if (null != callback) {
-            callback.onLost(_postcard)
-        } else {
-            val degradeService = ARouter.getInstance().navigation(DegradeService::class.java)
-            degradeService?.onLost(activity, _postcard)
-        }
-
-        return null
-    }
-    callback?.onFound(_postcard)
-    val interceptorService = ARouter.getInstance().navigation(InterceptorService::class.java)
-    if (!isGreenChannel && interceptorService != null) {
-        interceptorService.doInterceptions(_postcard, object : InterceptorCallback {
-
-            override fun onContinue(postcard: Postcard?) {
-                _navigation(activity, _postcard, activityResultCallback,fragment)
-            }
-
-            override fun onInterrupt(exception: Throwable?) {
-                callback?.onInterrupt(_postcard)
-            }
-
-        })
-    } else {
-        return _navigation(activity, this, activityResultCallback, fragment)
-    }
-    return null
+    return navigation(fragment?.requireActivity(), callback, activityResultCallback)
 }
 
 /**
@@ -137,11 +119,14 @@ fun Postcard.navigation(
  * @param [callback] 回调
  * @param [activityResultCallback] 返回数据回调
  */
-private fun Postcard.navigation(
-    activity: FragmentActivity,
+fun Postcard.navigation(
+    activity: FragmentActivity?,
     callback: NavigationCallback?,
     activityResultCallback: ActivityResultCallback<ActivityResult>
 ): Any? {
+    if (activity == null) {
+        return null
+    }
     val _postcard = this
     val pretreatmentService = ARouter.getInstance().navigation(PretreatmentService::class.java)
     if (null != pretreatmentService && !pretreatmentService.onPretreatment(activity, this)) {
@@ -201,7 +186,6 @@ private fun _navigation(
     activity: FragmentActivity,
     postcard: Postcard,
     activityResultCallback: ActivityResultCallback<ActivityResult>,
-    fragment: Fragment? = null
 ): Any? {
 
     return when (postcard.type) {
@@ -223,11 +207,7 @@ private fun _navigation(
                 if ((postcard.enterAnim != -1 && postcard.exitAnim != -1)) {
                     activity.overridePendingTransition(postcard.enterAnim, postcard.exitAnim)
                 }
-                if (fragment != null) {
-                    fragment.registerForActivityResult(intent, activityResultCallback)
-                } else {
-                    activity.registerForActivityResult(intent, activityResultCallback)
-                }
+                activity.registerForActivityResult(intent, activityResultCallback)
             }
             null
         }

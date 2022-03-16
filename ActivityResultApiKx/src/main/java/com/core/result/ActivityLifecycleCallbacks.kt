@@ -25,17 +25,6 @@ class ActivityLifecycleCallbacks : Application.ActivityLifecycleCallbacks {
         const val KEY_ACTIVITY_RESULT_API = "activityResultApi"
 
         /**
-         * 保存Fragment生命周期的Key
-         */
-        const val KEY_FRAGMENT_LIFECYCLE_CALLBACKS = "fragmentLifecycleCallbacks"
-
-        /**
-         * Fragment生命周期
-         */
-        val fragmentLifecycleCallbacksMap: MutableMap<String, FragmentLifecycleCallbacks> =
-            mutableMapOf()
-
-        /**
          * 保存activity和Fragment的resultLauncher
          */
         val resultLauncherMap: MutableMap<String, XActivityResultContract<Intent, ActivityResult>> =
@@ -48,12 +37,6 @@ class ActivityLifecycleCallbacks : Application.ActivityLifecycleCallbacks {
         if (activity is FragmentActivity) {
             //生成一个Key
             val activityKey = activity.javaClass.simpleName + System.currentTimeMillis()
-//            val fragmentLifecycleCallbacks = FragmentLifecycleCallbacks()
-//            //注册Fragment生命周期
-//            activity.supportFragmentManager.registerFragmentLifecycleCallbacks(
-//                fragmentLifecycleCallbacks,
-//                false
-//            )
             //添加一个默认ActivityResultLauncher
             val resultLauncher =
                 XActivityResultContract(activity, ActivityResultContracts.StartActivityForResult())
@@ -93,12 +76,6 @@ class ActivityLifecycleCallbacks : Application.ActivityLifecycleCallbacks {
         if (activity is FragmentActivity) {
             val activityKey = activity.intent.getStringExtra(KEY_ACTIVITY_RESULT_API)
             if (!TextUtils.isEmpty(activityKey)) {
-//                //移除fragment的生命周期监听
-//                fragmentLifecycleCallbacksMap[activityKey]?.let {
-//                    activity.supportFragmentManager.unregisterFragmentLifecycleCallbacks(it)
-//                }
-//                //移除对应的fragment监听
-//                fragmentLifecycleCallbacksMap.remove(activityKey)
                 //移除activity的resultLauncher
                 resultLauncherMap.remove(activityKey)
             }

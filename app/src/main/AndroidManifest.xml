@@ -10,10 +10,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.ActivityResultApi">
-        <activity android:name=".activity.FragmentActivity"></activity>
-        <activity android:name=".activity.ARouterActivity" />
-        <activity android:name=".activity.SecondActivity" />
-        <activity android:name=".activity.MainActivity">
+        <activity android:name=".activity.SecondActivity" android:label="第二个界面"/>
+        <activity android:name=".activity.MainActivity" android:label="ActivityResultApiKx使用示例">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

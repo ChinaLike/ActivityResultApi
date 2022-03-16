@@ -1,7 +1,5 @@
-plugins {
-    id 'com.android.library'
-    id 'kotlin-android'
-}
+apply plugin: "com.android.library"
+apply plugin: "kotlin-android"
 
 android {
     compileSdkVersion 31
@@ -11,7 +9,7 @@ android {
         minSdkVersion 17
         targetSdkVersion 31
         versionCode 1
-        versionName "1.0"
+        versionName "0.0.1"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles "consumer-rules.pro"
@@ -46,3 +44,18 @@ dependencies {
     implementation("androidx.fragment:fragment-ktx:1.4.1")
     implementation 'com.alibaba:arouter-api:1.5.2'
 }
+
+//==============================JitPack 上传插件配置 start=====================
+apply plugin: 'com.github.dcendents.android-maven'
+//组名 com.github是固定的,后面的ChinaLike是我Github的用户名,替换成你自己的就可以了
+group='com.github.ChinaLike'
+
+buildscript {
+    repositories {
+        jcenter()
+    }
+    dependencies {
+        classpath 'com.github.dcendents:android-maven-gradle-plugin:2.1'
+    }
+}
+//==============================JitPack 上传插件配置 end=======================
