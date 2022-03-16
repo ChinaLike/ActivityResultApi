@@ -25,12 +25,19 @@ class XActivityResultContract<I, O>(
 
 
     /**
-     *
+     * 启动
      */
     @JvmOverloads
     fun launch(input: I, activityResultCallback: ActivityResultCallback<O>?) {
         this.activityResultCallback = activityResultCallback
         launcher?.launch(input)
+    }
+
+    /**
+     * 注销
+     */
+    fun unregister() {
+        launcher?.unregister()
     }
 
 }

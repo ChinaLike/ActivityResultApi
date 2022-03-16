@@ -5,15 +5,12 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
-    tools:context=".activity.MainActivity">
+    tools:context=".activity.JavaActivity">
 
     <com.core.widget.toolbar.SimpleToolbar
-        android:id="@+id/toolbar"
         android:layout_width="match_parent"
-        app:lk_show_left_layout="false"
+        app:lk_toolbar_title="Java使用示例"
         android:layout_height="wrap_content"
-        app:lk_toolbar_menu_text="Java使用"
-        app:lk_show_right_layout="true"
         android:background="@color/purple_500" />
 
     <androidx.core.widget.NestedScrollView
@@ -50,30 +47,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="方式1(没有回调)" />
-
-                <Button
-                    android:id="@+id/normalStyle2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="方式2(不带参数)" />
-
-                <Button
-                    android:id="@+id/normalStyle3"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="方式2（带参数）" />
-
-                <Button
-                    android:id="@+id/normalStyle4"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="方式2（有参数，没有回调）" />
-
-                <Button
-                    android:id="@+id/normalStyle5"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="方式2（没有参数，没有回调）" />
 
                 <TextView
                     android:id="@+id/normalContent"
@@ -115,48 +88,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"/>
 
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:padding="10dp">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="3.Fragment中使用普通Intent跳转："
-                    android:textSize="18sp"
-                    android:textStyle="bold" />
-
-                <androidx.fragment.app.FragmentContainerView
-                    android:id="@+id/normalContainerView"
-                    android:name="com.demo.api.fragment.NormalFragment"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent" />
-
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:padding="10dp">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="4.Fragment中使用ARouter跳转："
-                    android:textSize="18sp"
-                    android:textStyle="bold" />
-
-                <androidx.fragment.app.FragmentContainerView
-                    android:id="@+id/aRouterContainerView"
-                    android:name="com.demo.api.fragment.ARouterFragment"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent" />
             </LinearLayout>
 
 

@@ -3,11 +3,14 @@ package com.demo.api.activity
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
+import androidx.appcompat.widget.AppCompatImageView
+import androidx.appcompat.widget.AppCompatTextView
 import com.alibaba.android.arouter.facade.Postcard
 import com.alibaba.android.arouter.facade.callback.NavigationCallback
 import com.alibaba.android.arouter.launcher.ARouter
 import com.core.result.navigation
 import com.core.result.registerForActivityResult
+import com.core.widget.toolbar.OnToolbarListener
 import com.demo.api.Key
 import com.demo.api.R
 import com.demo.api.Router
@@ -19,6 +22,12 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        binding.toolbar.onToolbarListener = object : OnToolbarListener {
+            override fun onMenuClick(imageView: AppCompatImageView?, textView: AppCompatTextView?) {
+                registerForActivityResult<JavaActivity>()
+            }
+        }
 
         //普通Intent跳转
         binding.normalStyle1Callback.setOnClickListener {

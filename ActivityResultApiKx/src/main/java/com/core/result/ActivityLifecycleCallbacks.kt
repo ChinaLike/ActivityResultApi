@@ -76,6 +76,7 @@ class ActivityLifecycleCallbacks : Application.ActivityLifecycleCallbacks {
         if (activity is FragmentActivity) {
             val activityKey = activity.intent.getStringExtra(KEY_ACTIVITY_RESULT_API)
             if (!TextUtils.isEmpty(activityKey)) {
+                resultLauncherMap[activityKey]?.unregister()
                 //移除activity的resultLauncher
                 resultLauncherMap.remove(activityKey)
             }
