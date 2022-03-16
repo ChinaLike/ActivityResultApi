@@ -43,7 +43,7 @@ inline fun FragmentActivity.registerForActivityResult(
 @JvmOverloads
 inline fun <reified T : FragmentActivity> FragmentActivity.registerForActivityResult(
     intentExtra: (intent: Intent) -> Unit = {},
-    activityResultCallback: ActivityResultCallback<ActivityResult>?=null
+    activityResultCallback: ActivityResultCallback<ActivityResult>? = null
 ) {
     val intent = Intent(this, T::class.java)
     intentExtra(intent)
@@ -192,16 +192,12 @@ private fun _navigation(
         RouteType.ACTIVITY -> {
 
             val intent = Intent(activity, postcard.destination)
-            postcard.extras?.let {
-                intent.putExtras(it)
-            }
+            postcard.extras?.let { intent.putExtras(it) }
             if (postcard.flags != -1) {
                 intent.flags = postcard.flags
             }
 
-            postcard.action?.let {
-                intent.action = postcard.action
-            }
+            postcard.action?.let { intent.action = postcard.action }
             activity.runOnUiThread {
                 //适配动画
                 if ((postcard.enterAnim != -1 && postcard.exitAnim != -1)) {
