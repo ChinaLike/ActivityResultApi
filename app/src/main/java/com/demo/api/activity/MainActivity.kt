@@ -48,6 +48,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
             val intent = Intent(this, SecondActivity::class.java)
             intent.putExtra(Key.SOURCE, source)
             registerForActivityResult(intent)
+//            startActivity(intent)
         }
         binding.normalStyle2.setOnClickListener {
             //方式2(不带参数)

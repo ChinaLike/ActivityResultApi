@@ -30,13 +30,9 @@ public class JavaActivity extends BaseActivity<ActivityJavaBinding> {
             binding.normalContent.setText(getResources().getString(R.string.result_data, ""));
             Intent intent = new Intent(this, SecondActivity.class);
             intent.putExtra(Key.SOURCE, source);
-            ActivityResultApiExKt.registerForActivityResult(this, intent, new ActivityResultCallback<ActivityResult>() {
-
-                @Override
-                public void onActivityResult(ActivityResult result) {
-                    binding.normalContent.setText(getResources().getString(R.string.result_data, result.getData().getStringExtra(Key.RESULT_DATE)));
-                }
-            });
+            ActivityResultApiExKt.registerForActivityResult(this, intent, result ->
+                    binding.normalContent.setText(getResources().getString(R.string.result_data, result.getData().getStringExtra(Key.RESULT_DATE)))
+            );
         });
 
         binding.normalStyle1NoCallback.setOnClickListener(v -> {
