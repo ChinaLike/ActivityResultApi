@@ -1,11 +1,10 @@
 # ActivityResultApiKx
 [![](https://img.shields.io/badge/platform-android-brightgreen.svg)](https://developer.android.com/index.html)  [![API](https://img.shields.io/badge/API-17%2B-blue.svg?style=flat)](https://android-arsenal.com/api?level=17)  [![](https://jitpack.io/v/ChinaLike/ActivityResultApi.svg)](https://jitpack.io/#ChinaLike/ActivityResultApi)  [![Gradle-4.1.2](https://img.shields.io/badge/Gradle-4.1.2-brightgreen.svg)](https://img.shields.io/badge/Gradle-4.1.2-brightgreen.svg)  [![](https://img.shields.io/badge/language-kotlin-brightgreen.svg)](https://kotlinlang.org/)
 
-细心的朋友会发现，高版本中`onActivityResult()`方法已经被官方标注`@Deprecated`，取而代之是[Activity Result API](https://developer.android.com/training/basics/intents/result)，虽然简化了每次在`onActivityResult()`中的处理，
+# API特色
 
-# Feature
-
-+ 优雅的适配Activity Result API
++ 优雅的适配Activity Result API，真正的支持在非Activity和Fragment中调用
++ 支持不用在onResume()之前初始化ActivityResultLauncher
 + 支持[ARouter](https://github.com/alibaba/ARouter)
 + 支持Kotlin和Java用法
 + Kotlin扩展，使用简单
@@ -15,12 +14,12 @@
 > step 1.在根目录的build.gradle添加：
 
 ```
-	allprojects {
-		repositories {
-			...
-			maven { url "https://jitpack.io" }
-		}
+allprojects {
+	repositories {
+		...
+		maven { url "https://jitpack.io" }
 	}
+}
 ```
 
 > step 2.然后在 build.gradle(Module:XXX) 的 dependencies 添加：
@@ -28,9 +27,9 @@
 当前最新版本：[![](https://jitpack.io/v/ChinaLike/ActivityResultApi.svg)](https://jitpack.io/#ChinaLike/ActivityResultApi)
 
 ```
-	dependencies {
-           implementation 'com.github.ChinaLike:ActivityResultApi:最新版本号'
-	}
+dependencies {
+       implementation 'com.github.ChinaLike:ActivityResultApi:最新版本号'
+}
 ```
 
 # API介绍
@@ -38,7 +37,7 @@
 + 此SDK支持不回调，当不需要回调的时候，使用我们平时的`startActivity()`也是一样的，按照自己习惯选择即可
 + 当没有Java示例的地方，说明不支持或者使用Java非常麻烦
 
-## registerForActivityResult(intent:,activityResultCallback)
+## registerForActivityResult(intent,activityResultCallback)
 
 ### 参数说明
 
@@ -53,7 +52,7 @@
 val intent = Intent(this, SecondActivity::class.java)
 intent.putExtra(Key.SOURCE, source)
 registerForActivityResult(intent) {
-	//	回调
+	//回调
 }
 ```
 
@@ -74,7 +73,7 @@ registerForActivityResult(intent)
 Intent intent = new Intent(this, SecondActivity.class);
 intent.putExtra(Key.SOURCE, source);
 ActivityResultApiExKt.registerForActivityResult(this, intent, result -> 
-            	//	回调
+      //回调
 );
 ```
 
@@ -99,7 +98,7 @@ ActivityResultApiExKt.registerForActivityResult(this, intent);
 
 ```
 registerForActivityResult<SecondActivity> {
-	//	回调
+	//回调
 }
 ```
 
@@ -127,7 +126,7 @@ registerForActivityResult<SecondActivity>({
 registerForActivityResult<SecondActivity>(）
 ```
 
-## 在ARouter中使用，navigation(context,navigationCallback,activityResultCallback)
+## ARouter中，navigation(context,navigationCallback,activityResultCallback)
 
 ### 参数说明
 
@@ -162,7 +161,7 @@ ARouter.getInstance()
         }
 
     }) {
-		//	回调
+	//回调
     }
 ```
 
@@ -173,7 +172,7 @@ ARouter.getInstance()
     .build(Router.SECOND_ACTIVITY)
     .withString(Key.SOURCE, source)
     .navigation(this) {
-		//	回调
+	//回调
     }
 ```
 
