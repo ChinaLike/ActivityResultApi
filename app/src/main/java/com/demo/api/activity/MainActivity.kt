@@ -34,18 +34,13 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
         binding.normalStyle1Callback.setOnClickListener {
             //方式1（有回调）
             binding.normalContent.text = resources.getString(R.string.result_data, "")
-//            val intent = Intent(this, SecondActivity::class.java)
-//            intent.putExtra(Key.SOURCE, source)
-//            registerForActivityResult(intent) {
-//                binding.normalContent.text = resources.getString(
-//                    R.string.result_data,
-//                    it.data?.getStringExtra(Key.RESULT_DATE)
-//                )
-//            }
-            startActivityForResult()
-
-            registerForActivityResult(ActivityResultContracts.StartActivityForResult()){
-
+            val intent = Intent(this, SecondActivity::class.java)
+            intent.putExtra(Key.SOURCE, source)
+            registerForActivityResult(intent) {
+                binding.normalContent.text = resources.getString(
+                    R.string.result_data,
+                    it.data?.getStringExtra(Key.RESULT_DATE)
+                )
             }
         }
         binding.normalStyle1NoCallback.setOnClickListener {
