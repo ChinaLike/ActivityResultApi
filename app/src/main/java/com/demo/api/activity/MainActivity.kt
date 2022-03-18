@@ -3,6 +3,7 @@ package com.demo.api.activity
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.appcompat.widget.AppCompatTextView
 import com.alibaba.android.arouter.facade.Postcard
@@ -33,13 +34,18 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
         binding.normalStyle1Callback.setOnClickListener {
             //方式1（有回调）
             binding.normalContent.text = resources.getString(R.string.result_data, "")
-            val intent = Intent(this, SecondActivity::class.java)
-            intent.putExtra(Key.SOURCE, source)
-            registerForActivityResult(intent) {
-                binding.normalContent.text = resources.getString(
-                    R.string.result_data,
-                    it.data?.getStringExtra(Key.RESULT_DATE)
-                )
+//            val intent = Intent(this, SecondActivity::class.java)
+//            intent.putExtra(Key.SOURCE, source)
+//            registerForActivityResult(intent) {
+//                binding.normalContent.text = resources.getString(
+//                    R.string.result_data,
+//                    it.data?.getStringExtra(Key.RESULT_DATE)
+//                )
+//            }
+            startActivityForResult()
+
+            registerForActivityResult(ActivityResultContracts.StartActivityForResult()){
+
             }
         }
         binding.normalStyle1NoCallback.setOnClickListener {
