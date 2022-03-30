@@ -49,6 +49,30 @@ dependencies {
 }
 ```
 
+> step 3.在项目自定义`Application`中添加或在已经有的自定义`Application`的`onCreate()`中添加：
+
+```
+class BaseApplication:Application() {
+
+    override fun onCreate() {
+        super.onCreate()
+        ...
+        ActivityResultApi.init(this)
+        ...
+    }
+}
+```
+并在`AndroidManifest.xml`中添加
+
+```
+    <application
+        ...
+        android:name=".BaseApplication"
+        ...>
+            ...
+    </application>
+```
+
 # API介绍
 
 + 此SDK支持不回调，当不需要回调的时候，使用我们平时的`startActivity()`也是一样的，按照自己习惯选择即可
